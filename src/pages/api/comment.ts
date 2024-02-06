@@ -1,5 +1,5 @@
 import db from "@/lib/dbConnection";
-import Task from "@/models/task-model";
+import Comment from "@/models/comment-model";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -8,15 +8,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
        //statements; 
        try {
           db.connect()
-          const id = req.query.id;
-          if(!id) {
-          const tasks = await Task.find({})
+          const taskId = req.query.taskId;
+          if(!taskId) {
+          const comments = await Comment.find({})
           
-          return res.status(200).json(tasks)
+          return res.status(200).json(comments)
           }
-          const task = await Task.findOne({_id: id})
+          const comments = await Comment.find({taskId: taskId})
           
-          return res.status(200).json(task)
+          return res.status(200).json(comments)
           break; 
         } catch (error) {
           return res.status(500);
@@ -28,16 +28,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
        try {
        db.connect()
        const data = req.body;
-       const newTask =  {
-            task: data.task,
+       const newComment =  {
+            comment: data.comment,
             created: data.created,
-            taskId: data.taskId,
             user: data.user,
-            public: data.public,
+            name: data.name,
+            taskId: data.taskId,
           }
-        const task = await Task.create(newTask)
+        const comment = await Comment.create(newComment)
 
-        return res.status(201).json(task)
+        return res.status(201).json(comment)
       } catch (error) {
         return res.status(500);
       } 
@@ -47,8 +47,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
          db.connect()
          const id = req.body.id
-         const deletedTask = await Task.deleteOne({_id: id})
-         return res.status(202).json(deletedTask)
+         const deletedComment = await Comment.deleteOne({_id: id})
+         return res.status(202).json(deletedComment)
        } catch (error) {
          return res.status(500);
        }
