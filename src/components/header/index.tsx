@@ -15,7 +15,7 @@ export function Header() {
           </Link>
           {session?.user && (
             <Link href="/dashboard" className={styles.link}>
-              Meu Painel
+              Dashboard
             </Link>
           )}
         </nav>
@@ -24,14 +24,14 @@ export function Header() {
           <></>
         ) : session ? (
           <button className={styles.loginButton} onClick={() => signOut()}>
-            Olá {session?.user?.name}
+            Hello {session?.user?.name}
           </button>
         ) : (
           <button
             className={styles.loginButton}
             onClick={() => signIn("google")}
           >
-            Acessar
+            Login
           </button>
         )}
       </section>

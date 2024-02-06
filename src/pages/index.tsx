@@ -16,7 +16,7 @@ export default function Home() {
         <div className={styles.logoHome}>
           <Image
           className={styles.hero}
-          alt="Logo Tarefas+"
+          alt="Logo Task#"
           src={logoHome}
           priority
           />
